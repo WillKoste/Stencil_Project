@@ -16,8 +16,10 @@ category:
 {{#partial "amp-style"}}
     {{> components/amp/category/styles }}
 {{/partial}}
+{{category.name}}
 {{#partial "page"}}
-    {{> components/amp/common/header }}
+    {{> components/amp/common/header}}
+    
     {{#if category.image}}
         <div class="categoryView-img">
             <amp-img src="{{getImage category.image 'zoom_size'}}" width="300" height="150" layout="responsive" alt="{{category.name}}"></amp-img>

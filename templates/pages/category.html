@@ -1,8 +1,14 @@
 ---
 category:
-    shop_by_price: true
-    products:
-        limit: {{theme_settings.categorypage_products_per_page}}
+  shop_by_price: true
+  products:
+    limit: {{theme_settings.categorypage_products_per_page}}
+    add_to_cart_url:
+product:
+  cart_url
+products:
+  featured
+cart: true
 ---
 {{inject "categoryProductsPerPage" theme_settings.categorypage_products_per_page}}
 {{inject "categoryId" category.id}}
@@ -28,6 +34,42 @@ category:
 {{/if}}
 {{#unless theme_settings.hide_category_page_heading }}
     <h1 class="page-heading">{{category.name}}</h1>
+    {{#if category.name '===' 'Special Items'}}
+        {{#if customer.id}}
+            {{> components/products/customer-info-header}}
+        {{/if}}
+        <!-- {{#if cart.items '>' '0'}} -->
+        <!-- {{#each cart.items}}
+        <div>
+            <h4>{{name}}</h4>
+            <p>{{sku}}</p>
+            <p>{{add_to_cart_url}}</p>
+        </div>
+    {{/each}} -->
+        <!-- {{/if}} -->
+        <div class="buttons-flex">
+            <!-- <form method="post" action="{{category.products.add_to_cart_url}}" enctype="multipart/form-data" data-cart-item-add target="_self">
+                <div id="add-to-cart-wrapper">
+                    <div class="form-action">
+                        {{category.products.add_to_cart_url}}
+                        <input id="form-action-addToCart" type="submit" data-wait-message="{{lang 'products.adding_to_cart'}}" class="button button--primary" value="{{lang 'products.add_all_to_cart'}}"> -->
+                        <!-- <input id="form-action-addToCart" data-wait-message="{{lang 'products.adding_to_cart'}}" type="submit" value="{{lang 'products.add_all_to_cart'}}" class="button button--primary"> -->
+                        <button class="button button--primary" id="add-all-to-cart-btn">
+                            {{lang 'products.add_all_to_cart'}}
+                        </button>
+                    <!-- </div>
+                </div>
+            </form> -->
+            <!-- {{#if cart.quantity '>' 0}}
+                <button id="remove-all-cart-button"data-cart-itemid="{{15}}" data-confirm-delete="{{lang 'cart.confirm_delete'}}" aria-label="{{lang 'cart.remove_item' name=name}}">{{lang 'cart.remove_all_items'}}</button>
+
+                <form action="{{category.products.add_to_cart_url}}" class="form cart-remove-all-form" data-cart-item-remove>
+                    <input type="submit" id="remove-all-cart-button" value="{{lang 'products.remove_all_items'}}" data-confirm-delete="{{lang 'cart.confirm_delete'}}" class="button button-sm cart-remove-all" aria-label="{{lang 'cart.remove_item' name=name}}">
+                </form>
+            {{/if}} -->
+            {{> components/products/remove-all-from-cart}}
+        </div>
+    {{/if}}
     {{{region name="category_below_header"}}}
 {{/unless}}
 {{{category.description}}}
@@ -52,6 +94,15 @@ category:
         {{> components/category/product-listing}}
         {{{region name="category_below_content"}}}
     </div>
+</div>
+
+{{> components/products/add-to-cart}}
+
+
+<div id="previewModal" class="modal modal--large" data-reveal>
+    {{> components/common/modal/modal-close-btn }}
+    <div class="modal-content">Heyhey</div>
+    <div class="loadingOverlay"></div>
 </div>
 
 {{/partial}}
